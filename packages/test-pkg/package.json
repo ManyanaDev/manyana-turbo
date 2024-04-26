@@ -1,0 +1,17 @@
+{
+  "name": "@repo/test-pkg",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "dev": "bun run index.ts",
+    "build": "bun build index.ts"
+  },
+  "exports": {
+    ".": "./index.ts"
+  },
+  "dependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*"
+  }
+}
