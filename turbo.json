@@ -11,7 +11,7 @@
     },
     "build:payload": {
       "dependsOn": ["^build"],
-      "outputs": ["./dist/**", "build/**"]
+      "outputs": ["dist/**", "build/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
