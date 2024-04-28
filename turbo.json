@@ -9,6 +9,10 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "build:payload": {
+      "dependsOn": ["^build"],
+      "outputs": ["./dist/**", "build/**"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },
