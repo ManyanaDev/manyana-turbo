@@ -3,29 +3,21 @@
 import { Button, InputGroup } from "@repo/ui/InputGroup";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { register } from "../../../actions/auth/register.action";
 import classNames from "classnames";
 import Link from "next/link";
 
-export interface User {
-  name: string;
-  email: string;
+import { resetPassword } from "../../../actions/auth/forgot-password.action";
+
+export interface ResetPasswordData {
   password: string;
   password_confirm: string;
 }
 
-export interface Merchant {
-  business_name: string;
-}
-
-const RegisterForm = () => {
+const PasswordResetForm = () => {
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<User & Merchant>({
+  const form = useForm<ResetPasswordData>({
     defaultValues: {
-      name: "Test",
-      email: "test-user@test.com",
-      business_name: "ACME Inc.",
       password: "Password1!",
       password_confirm: "Password1!",
     },
@@ -35,10 +27,10 @@ const RegisterForm = () => {
     formState: { errors },
   } = form;
 
-  async function onSubmit(data: User & Merchant) {
+  async function onSubmit(data: ResetPasswordData) {
     setLoading(true);
     try {
-      await register(data);
+      await resetPassword(data);
     } catch (error) {
       console.log("error :>> ", error);
     } finally {
@@ -53,38 +45,6 @@ const RegisterForm = () => {
         "opacity-70 pointer-events-none": loading,
       })}
     >
-      <InputGroup
-        label="Name"
-        register={form.register("name", {
-          required: {
-            message: "",
-            value: true,
-          },
-        })}
-        errors={errors.name}
-      />
-
-      <InputGroup
-        label="Email"
-        inputType="email"
-        register={form.register("email", {
-          required: {
-            message: "",
-            value: true,
-          },
-        })}
-        errors={errors.email}
-      />
-      <InputGroup
-        label="Business name"
-        register={form.register("business_name", {
-          required: {
-            message: "",
-            value: true,
-          },
-        })}
-        errors={errors.business_name}
-      />
       <InputGroup
         label="Password"
         inputType="password"
@@ -105,7 +65,7 @@ const RegisterForm = () => {
             value: true,
           },
         })}
-        errors={errors.password}
+        errors={errors.password_confirm}
       />
       <div className="pt-10 flex w-full">
         <Button
@@ -115,17 +75,41 @@ const RegisterForm = () => {
           buttonType="submit"
           className="w-full"
         >
-          Register
+          Reset password
         </Button>
       </div>
-      <div className="w-full pt-4 text-right text-xs">
-        Already have an account?{" "}
-        <Link href={"/login"} className="text-success hover:text-success/50">
-          Log in
-        </Link>
+
+      <div className="pt-10 flex flex-col w-full">
+        <p className="text-xs mb-2">Didn't receive an email?</p>
+        <Button
+          type="info"
+          size="md"
+          outline
+          buttonType="submit"
+          className="w-full"
+        >
+          Resend email
+        </Button>
+      </div>
+
+      <div className="flex justify-between w-full pt-4 text-right text-xs">
+        <div>
+          <Link href={"/login"} className="text-success hover:text-success/50">
+            Login
+          </Link>
+        </div>
+        <div>
+          Not joined us yet?
+          <Link
+            href={"/register"}
+            className="text-success hover:text-success/50 ml-2"
+          >
+            Register
+          </Link>
+        </div>
       </div>
     </form>
   );
 };
 
-export default RegisterForm;
+export default PasswordResetForm;
