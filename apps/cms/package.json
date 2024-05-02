@@ -1,11 +1,11 @@
 {
-  "name": "cms",
+  "name": "@repo/cms",
   "description": "A blank template to get started with Payload 3.0",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "dev": "PORT=3002 cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
@@ -20,6 +20,7 @@
     "@payloadcms/db-postgres": "beta",
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-cloud": "beta",
+    "@payloadcms/plugin-stripe": "^0.0.19",
     "@payloadcms/richtext-lexical": "beta",
     "cross-env": "^7.0.3",
     "next": "^14.3.0-canary.7",

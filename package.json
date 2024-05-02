@@ -9,9 +9,11 @@
     "test": "turbo test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "clean": "turbo run clean"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
     "graphql": "^16.8.1"
   },
   "devDependencies": {
@@ -19,19 +21,22 @@
     "@repo/shared": "*",
     "@repo/test-pkg": "*",
     "@repo/typescript-config": "*",
+    "@repo/ui": "*",
     "autoprefixer": "^10.4.19",
+    "daisyui": "^4.10.3",
     "git-cz": "^4.9.0",
     "husky": "^9.0.11",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "rimraf": "^5.0.5",
     "tailwindcss": "^3.4.3",
     "turbo": "latest"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18.19.0"
   },
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "bun@1.1.4",
   "workspaces": [
     "apps/*",
     "packages/*"

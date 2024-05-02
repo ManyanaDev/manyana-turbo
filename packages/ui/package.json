@@ -3,14 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./header": "./src/header.tsx",
-    "./button": "./src/button.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./styles.css": "./dist/index.css",
+    "./*": "./src/index.ts"
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component"
+    "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+    "lint": "eslint src/ --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
@@ -21,9 +28,14 @@
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
+    "autoprefixer": "^10.4.19",
+    "daisyui": "^4.10.3",
     "eslint": "^8.57.0",
-    "react": "^18.2.0",
+    "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "react-hook-form": "^7.51.3"
   }
 }

@@ -2,7 +2,7 @@ import { testPkg } from "@repo/test-pkg";
 
 export default async function Page(): Promise<JSX.Element> {
   const t = await testPkg("Jack");
-  console.log(t);
+  // console.log(t);
   return (
     <main className="text-white">
       <h1 className=" text-4xl">Web</h1>

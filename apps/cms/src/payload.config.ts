@@ -7,6 +7,7 @@ import { buildConfig } from 'payload/config'
 import { fileURLToPath } from 'url'
 
 import { Users } from './collections/Users'
+// import stripePlugin from '@payloadcms/plugin-stripe'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,6 +28,11 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
+  // plugins: [
+  //   stripePlugin({
+  //     stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
+  //   }),
+  // ],
 
   // Sharp is now an optional dependency -
   // if you want to resize images, crop, set focal point, etc.
