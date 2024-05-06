@@ -1,6 +1,6 @@
 "use server";
 
-import { Merchant, User } from "../../components/forms/auth/register";
+import { Merchant, User } from "@repo/shared/types";
 
 export async function register(data: User & Merchant) {
   console.log("data :>> ", data);

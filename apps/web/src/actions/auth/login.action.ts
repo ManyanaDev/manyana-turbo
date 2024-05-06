@@ -1,6 +1,6 @@
 "use server";
 
-import { User } from "../../components/forms/auth/register";
+import { User } from "@repo/shared/types";
 
 export async function login(data: User) {
   console.log("data :>> ", data);

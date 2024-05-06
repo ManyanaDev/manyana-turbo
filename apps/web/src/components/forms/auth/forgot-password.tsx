@@ -6,10 +6,7 @@ import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import Link from "next/link";
 import { forgotPassword } from "../../../actions/auth/forgot-password.action";
-
-export interface User {
-  email: string;
-}
+import { User } from "@repo/shared/types";
 
 const ForgotPasswordForm = () => {
   const [loading, setLoading] = useState(false);

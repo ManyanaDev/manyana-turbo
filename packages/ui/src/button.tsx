@@ -20,6 +20,9 @@ interface ButtonProps {
     | "link";
   size?: "lg" | "md" | "sm" | "xs";
   outline?: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
+  id?: string;
 }
 
 export const Button = ({
@@ -29,27 +32,31 @@ export const Button = ({
   type,
   size,
   outline,
+  onClick,
+  disabled,
+  id,
 }: ButtonProps) => {
-  const classname = classNames("btn", className, {
-    "btn-neutral": type === "neutral",
-    "btn-primary": type === "primary",
-    "btn-secondary": type === "secondary",
-    "btn-accent": type === "accent",
-    "btn-info": type === "info",
-    "btn-success": type === "success",
-    "btn-warning": type === "warning",
-    "btn-error": type === "error",
-    "btn-ghost": type === "ghost",
-    "btn-link": type === "link",
-    "btn-outline": outline,
-    "btn-lg": size === "lg",
-    "btn-md": size === "md",
-    "btn-sm": size === "sm",
-    "btn-xs": size === "xs",
+  const classname = classNames("ui-btn", className, {
+    "ui-btn-neutral": type === "neutral",
+    "ui-btn-primary": type === "primary",
+    "ui-btn-secondary": type === "secondary",
+    "ui-btn-accent": type === "accent",
+    "ui-btn-info": type === "info",
+    "ui-btn-success": type === "success",
+    "ui-btn-warning": type === "warning",
+    "ui-btn-error": type === "error",
+    "ui-btn-ghost": type === "ghost",
+    "ui-btn-link": type === "link",
+    "ui-btn-outline": outline,
+    "ui-btn-lg": size === "lg",
+    "ui-btn-md": size === "md",
+    "ui-btn-sm": size === "sm",
+    "ui-btn-xs": size === "xs",
+    "ui-btn-disabled": disabled,
   });
 
   return (
-    <button className={classname} type={buttonType}>
+    <button className={classname} type={buttonType} onClick={onClick} id={id}>
       {children}
     </button>
   );

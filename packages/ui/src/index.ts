@@ -3,4 +3,5 @@ export { Header } from "./header";
 export { Button } from "./button";
 export { Card } from "./card";
 
-export { InputGroup } from "./forms/InputGroup";
+export * from "./forms";
+export * from "./cards";

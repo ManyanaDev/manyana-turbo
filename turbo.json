@@ -21,5 +21,10 @@
       "persistent": true
     }
   },
-  "globalEnv": ["DATABASE_URI", "PAYLOAD_SECRET", "STRIPE_SECRET_KEY"]
+  "globalEnv": [
+    "DATABASE_URI",
+    "PAYLOAD_SECRET",
+    "STRIPE_SECRET_KEY",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+  ]
 }

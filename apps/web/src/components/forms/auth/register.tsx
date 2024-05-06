@@ -1,22 +1,12 @@
 "use client";
 
-import { Button, InputGroup } from "@repo/ui/InputGroup";
+import { Button, InputGroup } from "@repo/ui/*";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { register } from "../../../actions/auth/register.action";
 import classNames from "classnames";
 import Link from "next/link";
-
-export interface User {
-  name: string;
-  email: string;
-  password: string;
-  password_confirm: string;
-}
-
-export interface Merchant {
-  business_name: string;
-}
+import { Merchant, User } from "@repo/shared/types";
 
 const RegisterForm = () => {
   const [loading, setLoading] = useState(false);

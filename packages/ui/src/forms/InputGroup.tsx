@@ -1,14 +1,15 @@
 "use client";
 
 import classNames from "classnames";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, ReactNode } from "react";
 import { UseFormRegisterReturn, FieldError } from "react-hook-form";
 
-export interface InputGroupProps {
+export interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   inputType?: InputHTMLAttributes<HTMLInputElement>["type"];
   register?: UseFormRegisterReturn;
   errors?: FieldError;
+  displayValue?: ReactNode;
 }
 
 export const InputGroup = ({
@@ -16,6 +17,8 @@ export const InputGroup = ({
   inputType = "text",
   register,
   errors,
+  displayValue,
+  ...rest
 }: InputGroupProps) => {
   return (
     <div className="ui-w-full">
@@ -29,16 +32,19 @@ export const InputGroup = ({
             {label}
             {errors && <span className=""> is required</span>}
           </span>
+          {displayValue && (
+            <span className="ui-text-xs ui-text-gray-500">{displayValue}</span>
+          )}
         </div>
         <input
+          {...rest}
           type={inputType}
           placeholder="Type here"
-          className={classNames(
-            "ui-input ui-input-bordered ui-w-full ui-input-md",
-            {
-              "ui-input-error": errors,
-            }
-          )}
+          className={classNames("ui-w-full", {
+            "ui-input ui-input-bordered ui-input-md": inputType === "text",
+            "ui-range": inputType === "range",
+            "ui-input-error": errors,
+          })}
           {...register}
         />
       </label>

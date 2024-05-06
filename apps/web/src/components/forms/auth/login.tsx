@@ -6,13 +6,7 @@ import { useForm } from "react-hook-form";
 import { login } from "../../../actions/auth/login.action";
 import classNames from "classnames";
 import Link from "next/link";
-
-export interface User {
-  name: string;
-  email: string;
-  password: string;
-  password_confirm: string;
-}
+import type { User } from "@repo/shared/types";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);

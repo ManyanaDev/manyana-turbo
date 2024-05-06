@@ -2,22 +2,14 @@
   "name": "@repo/shared",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "./src/index.ts",
+  "main": "./src/types/index.ts",
+  "types": "./src/types/index.ts",
   "exports": {
-    ".": {
-      "serve": {
-        "types": "./dist/index.js",
-        "require": "./dist/index.js",
-        "import": "./dist/index.js"
-      },
-      "default": {
-        "types": "./src/index.ts",
-        "require": "./src/index.ts",
-        "import": "./src/index.ts"
-      }
-    }
+    "./types": "./types/index.ts",
+    "./src": "./src/index.ts"
   },
   "scripts": {
+    "dev": "rm -rf dist && tsc",
     "build": "rm -rf dist && tsc",
     "clean": "rm -rf node_modules dist .turbo",
     "lint": "eslint --ext .ts,.js./src"
