@@ -9,6 +9,7 @@ import { projectList } from "@repo/shared/src";
 import { createSubscription } from "../../../actions/stripe/subscriptions.action";
 import { useRouter } from "next/navigation";
 import { createCustomer } from "../../../actions/stripe/customer.action";
+import RegistrationLayout from "../../layouts/RegistrationLayout";
 
 const SelectSubscription = ({
   options,
@@ -58,9 +59,68 @@ const SelectSubscription = ({
     }
   }
 
+  function PaymentSummary() {
+    return (
+      <div className="p-8 bg-lime-100 shadow-lg rounded-lg space-y-4">
+        <h2 className="text-2xl text-slate-600 font-bold">Payment Summary</h2>
+        <div>
+          <h3 className="text-xl text-slate-600">Sponsor Allocation</h3>
+          {Object.entries(allocations).map(([key, v]) => {
+            const project = projectList.find((p) => p.id === key);
+            const value = (Number(v) / 100).toLocaleString("en-US", {
+              style: "percent",
+              currency: "GBP",
+            });
+
+            if (!project) {
+              return null;
+            }
+
+            return (
+              <div
+                key={key}
+                className="flex justify-between gap-x-4 text-slate-400 text-xs"
+              >
+                <span>{project.title}</span>
+                <span>{value}</span>
+              </div>
+            );
+          })}
+        </div>
+        {selected && (
+          <div>
+            <h3 className="text-xl text-slate-600">Subscription</h3>
+            <div className="flex flex-col justify-between gap-x-4">
+              <span>{selected?.label}</span>
+              <span>{selected?.amount} per month</span>
+              <span className="font-bold text-base-200 mt-2">
+                {selected.unit_amount &&
+                  Intl.NumberFormat("en", {
+                    currency: selected.unit_amount_currency || "GBP",
+                    style: "currency",
+                  }).format(selected.unit_amount / 100)}
+                <span className="pl-1">payable now</span>
+              </span>
+            </div>
+          </div>
+        )}
+        <div>
+          <Button
+            size="sm"
+            className="w-full"
+            type="accent"
+            onClick={handleSubscription}
+          >
+            Confirm and Pay
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full flex min-h-screen h-full bg-base-200">
-      <div className="w-1/2 h-full p-10 space-y-5 flex flex-col">
+    <RegistrationLayout right={<PaymentSummary />}>
+      <div className="h-full p-10 space-y-5 flex flex-col">
         <h1 className="text-3xl font-bold">Checkout</h1>
         <div className="flex gap-x-2">
           <div role="tablist" className="tabs tabs-boxed capitalize mx-auto">
@@ -86,63 +146,7 @@ const SelectSubscription = ({
           />
         </div>
       </div>
-      <div className="w-1/2 bg-gradient-to-tr from-blue-800 to-pink-800 flex items-center justify-center">
-        <div className="p-8 bg-lime-100 shadow-lg rounded-lg space-y-4">
-          <h2 className="text-2xl text-slate-600 font-bold">Payment Summary</h2>
-          <div>
-            <h3 className="text-xl text-slate-600">Sponsor Allocation</h3>
-            {Object.entries(allocations).map(([key, v]) => {
-              const project = projectList.find((p) => p.id === key);
-              const value = (Number(v) / 100).toLocaleString("en-US", {
-                style: "percent",
-                currency: "GBP",
-              });
-
-              if (!project) {
-                return null;
-              }
-
-              return (
-                <div
-                  key={key}
-                  className="flex justify-between gap-x-4 text-slate-400 text-xs"
-                >
-                  <span>{project.title}</span>
-                  <span>{value}</span>
-                </div>
-              );
-            })}
-          </div>
-          {selected && (
-            <div>
-              <h3 className="text-xl text-slate-600">Subscription</h3>
-              <div className="flex flex-col justify-between gap-x-4">
-                <span>{selected?.label}</span>
-                <span>{selected?.amount} per month</span>
-                <span className="font-bold text-base-200 mt-2">
-                  {selected.unit_amount &&
-                    Intl.NumberFormat("en", {
-                      currency: selected.unit_amount_currency || "GBP",
-                      style: "currency",
-                    }).format(selected.unit_amount / 100)}
-                  <span className="pl-1">payable now</span>
-                </span>
-              </div>
-            </div>
-          )}
-          <div>
-            <Button
-              size="sm"
-              className="w-full"
-              type="accent"
-              onClick={handleSubscription}
-            >
-              Confirm and Pay
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
+    </RegistrationLayout>
   );
 };
 

@@ -17,7 +17,15 @@ const PaymentWrapper = ({
   clientSecret: string;
 }) => {
   return (
-    <Elements stripe={stripe}>
+    <Elements
+      stripe={stripe}
+      options={{
+        clientSecret,
+        appearance: {
+          theme: "night",
+        },
+      }}
+    >
       <Payment subscription={subscription} clientSecret={clientSecret} />
     </Elements>
   );

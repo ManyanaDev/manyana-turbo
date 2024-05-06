@@ -47,8 +47,8 @@ export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
 
   return (
     <div>
-      <div className="flex gap-x-20">
-        <div className="w-2/3 grid grid-cols-2 gap-10">
+      <div className="flex flex-col gap-20">
+        <div className="w-full grid grid-cols-2 gap-10">
           {projects?.map((project) => {
             return (
               <div>
@@ -65,7 +65,7 @@ export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
             );
           })}
         </div>
-        <div className="w-1/3">
+        <div className="w-full">
           <h2 className="font-bold text-2xl">Total</h2>
           <h2
             className={classNames("font-bold text-5xl", {

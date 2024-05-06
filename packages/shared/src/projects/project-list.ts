@@ -7,29 +7,29 @@ export function isValidProject(value: unknown): value is ProjectList["id"] {
 export const projectList: ProjectList[] = [
   {
     id: "AFFORDABLE_AND_CLEAN_ENERGY",
-    title: "Affordable And Clean Energy",
+    title: "Affordable & Clean Energy",
     description: "",
   },
   {
     id: "CLEAN_WATER_AND_SANITATION",
-    title: "Clean Water And Sanitation",
+    title: "Clean Water & Sanitation",
     description: "",
   },
   { id: "CLIMATE_ACTION", title: "Climate Action", description: "" },
   {
     id: "DECENT_WORK_AND_ECONOMIC_GROWTH",
-    title: "Decent Work And Economic Growth",
+    title: "Decent Work & Economic Growth",
     description: "",
   },
   { id: "GENDER_EQUALITY", title: "Gender Equality", description: "" },
   {
     id: "GOOD_HEALTH_AND_WELL_BEING",
-    title: "Good Health And Well Being",
+    title: "Good Health & Well Being",
     description: "",
   },
   {
     id: "INDUSTRY_INNOVATION_AND_INFRASTRUCTURE",
-    title: "Industry Innovation And Infrastructure",
+    title: "Industry Innovation & Infrastructure",
     description: "",
   },
   { id: "LIFE_BELOW_WATER", title: "Life Below Water", description: "" },
@@ -42,7 +42,7 @@ export const projectList: ProjectList[] = [
   },
   {
     id: "PEACE_JUSTICE_AND_STRONG_INSTITUTIONS",
-    title: "Peace Justice And Strong Institutions",
+    title: "Peace Justice & Strong Institutions",
     description: "",
   },
   { id: "QUALITY_EDUCATION", title: "Quality Education", description: "" },
@@ -53,12 +53,12 @@ export const projectList: ProjectList[] = [
   },
   {
     id: "RESPONSIBLE_CONSUMPTION_AND_PRODUCTION",
-    title: "Responsible Consumption And Production",
+    title: "Responsible Consumption & Production",
     description: "",
   },
   {
     id: "SUSTAINABLE_CITIES_AND_COMMUNITIES",
-    title: "Sustainable Cities And Communities",
+    title: "Sustainable Cities & Communities",
     description: "",
   },
   { id: "ZERO_HUNGER", title: "Zero Hunger", description: "" },

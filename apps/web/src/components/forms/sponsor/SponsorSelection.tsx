@@ -37,7 +37,7 @@ const SponsorSelection = () => {
 
   return (
     <div>
-      <form className="grid grid-cols-5 gap-5">
+      <form className="grid grid-cols-4 gap-5">
         {projectList.map((project) => {
           return (
             <SmallOptionCard
@@ -50,7 +50,7 @@ const SponsorSelection = () => {
             />
           );
         })}
-        <div className="mt-5 col-span-5">
+        <div className="mt-5 col-span-4">
           <Button size="md" type="accent" buttonType="button" onClick={onNext}>
             Confirm
           </Button>

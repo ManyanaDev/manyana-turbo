@@ -37,7 +37,7 @@ export const SmallOptionCard = ({
       )}
       onClick={() => onClick?.(value)}
     >
-      <span className="ui-label-text ui-text-lg ui-text-gray-200 ui-leading-none">
+      <span className="ui-label-text ui-text-base ui-text-gray-200 ui-leading-none">
         {label}
       </span>
     </div>

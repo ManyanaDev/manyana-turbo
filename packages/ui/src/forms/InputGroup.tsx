@@ -40,13 +40,15 @@ export const InputGroup = ({
           {...rest}
           type={inputType}
           placeholder="Type here"
-          className={classNames(
-            "ui-w-full ui-input ui-input-bordered ui-input-md",
-            {
-              "ui-range": inputType === "range",
-              "ui-input-error": errors,
-            }
-          )}
+          className={classNames("ui-w-full", {
+            "ui-input ui-input-bordered ui-input-md":
+              inputType === "text" ||
+              inputType === "email" ||
+              inputType === "password" ||
+              inputType === "number",
+            "ui-range": inputType === "range",
+            "ui-input-error": errors,
+          })}
           {...register}
         />
       </label>
