@@ -1,8 +1,9 @@
 "use server";
 
+import { fakePromise } from "@repo/shared/src";
 import { Merchant, User } from "@repo/shared/types";
 
 export async function register(data: User & Merchant) {
   console.log("data :>> ", data);
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  return await fakePromise(data);
 }

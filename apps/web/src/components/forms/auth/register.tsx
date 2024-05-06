@@ -1,20 +1,22 @@
 "use client";
 
-import { Button, InputGroup } from "@repo/ui/*";
+import { Button, InputGroup, toastPromise } from "@repo/ui/*";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { register } from "../../../actions/auth/register.action";
 import classNames from "classnames";
 import Link from "next/link";
 import { Merchant, User } from "@repo/shared/types";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const { push } = useRouter();
   const [loading, setLoading] = useState(false);
 
   const form = useForm<User & Merchant>({
     defaultValues: {
       name: "Test",
-      email: "test-user@test.com",
+      email: `user-${Date.now()}@test.com`,
       business_name: "ACME Inc.",
       password: "Password1!",
       password_confirm: "Password1!",
@@ -25,20 +27,37 @@ const RegisterForm = () => {
     formState: { errors },
   } = form;
 
-  async function onSubmit(data: User & Merchant) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setLoading(true);
-    try {
-      await register(data);
-    } catch (error) {
-      console.log("error :>> ", error);
-    } finally {
-      setLoading(false);
-    }
+
+    toastPromise({
+      func: form.handleSubmit((data) =>
+        register(data).finally(() => {
+          setLoading(false);
+        })
+      ),
+      pending: {
+        title: "Registering",
+        message: "Please wait",
+      },
+      success: {
+        title: "Registration successful",
+        message: "Please check your email for a confirmation link",
+        callback: async function () {
+          push("/register/sponsor-selection");
+        },
+      },
+      error: {
+        title: "Registration failed",
+        message: "Registration failed",
+      },
+    });
   }
 
   return (
     <form
-      onSubmit={form.handleSubmit(onSubmit)}
+      onSubmit={handleSubmit}
       className={classNames("flex flex-col w-full space-y-2 text-sm", {
         "opacity-70 pointer-events-none": loading,
       })}

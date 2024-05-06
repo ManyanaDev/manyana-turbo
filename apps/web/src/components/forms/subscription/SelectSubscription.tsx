@@ -48,7 +48,7 @@ const SelectSubscription = ({
 
       if (subscription?.id && client_secret) {
         return router.push(
-          `/billing/payment?sub_id=${subscription.id}&cs=${client_secret}`
+          `/register/payment?sub_id=${subscription.id}&cs=${client_secret}`
         );
       }
 

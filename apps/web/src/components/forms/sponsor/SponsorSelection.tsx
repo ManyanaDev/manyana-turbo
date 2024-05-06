@@ -32,7 +32,7 @@ const SponsorSelection = () => {
       },
     ]);
 
-    push(`/sponsor-allocation?${params}`);
+    push(`/register/sponsor-allocation?${params}`);
   }
 
   return (

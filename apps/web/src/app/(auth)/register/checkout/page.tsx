@@ -14,31 +14,16 @@ const page: NextPage<{
   let allocations: Record<string, number> = {};
 
   if (!sponsorAllocation) {
-    return (
-      <div>
-        <Header />
-        <div className="text-center py-20">No sponsor allocation found</div>
-      </div>
-    );
+    return <div className="text-center py-20">No sponsor allocation found</div>;
   }
 
   try {
     allocations = sponsorAllocation && JSON.parse(sponsorAllocation);
   } catch (error) {
-    return (
-      <div>
-        <Header />
-        <div className="text-center py-20">Invalid JSON</div>
-      </div>
-    );
+    return <div className="text-center py-20">Invalid JSON</div>;
   }
 
-  return (
-    <div>
-      <Header />
-      <SelectSubscription options={prices} allocations={allocations} />
-    </div>
-  );
+  return <SelectSubscription options={prices} allocations={allocations} />;
 };
 
 export default page;

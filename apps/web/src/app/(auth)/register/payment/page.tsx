@@ -1,7 +1,6 @@
 "use client";
 /* eslint-disable turbo/no-undeclared-env-vars */
 import React, { useEffect, useState } from "react";
-import { Header } from "@repo/ui/Header";
 import { NextPage } from "next";
 
 import { getSubscription } from "../../../../actions/stripe/subscriptions.action";
@@ -12,6 +11,8 @@ import Stripe from "stripe";
 const page: NextPage<{
   searchParams: Record<string, string>;
 }> = ({ searchParams }) => {
+  const stripePromise = getStripe();
+
   const subscriptionId = searchParams?.sub_id ?? "";
   const clientSecret = searchParams?.cs ?? "";
 
@@ -26,22 +27,17 @@ const page: NextPage<{
       });
     }
   }, []);
-  // const subscription = await getSubscription(subscriptionId);
-  const stripePromise = getStripe();
+
+  if (!subscription) {
+    return <div className="text-center py-20">No checkout session found</div>;
+  }
 
   return (
-    <div>
-      <Header />
-      {subscription ? (
-        <PaymentWrapper
-          stripe={stripePromise}
-          subscription={subscription}
-          clientSecret={clientSecret}
-        />
-      ) : (
-        <div className="text-center py-20">No checkout session found</div>
-      )}
-    </div>
+    <PaymentWrapper
+      stripe={stripePromise}
+      subscription={subscription}
+      clientSecret={clientSecret}
+    />
   );
 };
 

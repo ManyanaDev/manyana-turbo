@@ -42,7 +42,7 @@ export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
       },
     ]);
 
-    push(`/billing/checkout?${params}`);
+    push(`/register/checkout?${params}`);
   }
 
   return (
