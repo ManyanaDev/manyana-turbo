@@ -6,7 +6,8 @@
   "types": "./src/types/index.ts",
   "exports": {
     "./types": "./types/index.ts",
-    "./src": "./src/index.ts"
+    "./src": "./src/index.ts",
+    "./lib": "./lib/index.ts"
   },
   "scripts": {
     "dev": "rm -rf dist && tsc",
@@ -16,5 +17,8 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "payload": "^2.16.1"
   }
 }

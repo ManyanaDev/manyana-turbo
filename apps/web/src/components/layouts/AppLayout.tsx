@@ -1,12 +1,12 @@
-import { Header } from "@repo/ui/header";
 import React, { ReactNode } from "react";
+import Navbar from "./Navbar";
 
 const AppLayout = ({ children }: { children?: ReactNode }) => {
   return (
-    <>
-      <Header />
+    <div>
+      <Navbar />
       {children}
-    </>
+    </div>
   );
 };
 

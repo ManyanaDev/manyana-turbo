@@ -2,7 +2,14 @@ import { IoMdSearch } from "react-icons/io";
 import { FaRegBell } from "react-icons/fa";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 
-export const Header = () => {
+export interface HeaderProps {
+  links?: Array<{
+    label: string;
+    onClick: () => void;
+  }>;
+}
+
+export const Header = ({ links }: HeaderProps) => {
   return (
     <div className="ui-navbar ui-bg-base-100">
       <div className="ui-navbar-start">
@@ -16,17 +23,13 @@ export const Header = () => {
           </div>
           <ul
             tabIndex={0}
-            className="ui-menu ui-menu-sm ui-dropdown-content ui-mt-3 ui-z-[1] ui-p-2 ui-shadow ui-bg-base-100 ui-rounded-box ui-ui-w-52"
+            className="ui-menu ui-menu-sm ui-dropdown-content ui-mt-3 ui-z-[1] ui-p-2 ui-shadow ui-bg-base-100 ui-rounded-box ui-w-60"
           >
-            <li>
-              <a>Homepage</a>
-            </li>
-            <li>
-              <a>Portfolio</a>
-            </li>
-            <li>
-              <a>About</a>
-            </li>
+            {links?.map((link) => (
+              <li key={link.label}>
+                <div onClick={link.onClick}>{link.label}</div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

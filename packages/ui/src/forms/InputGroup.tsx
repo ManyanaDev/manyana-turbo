@@ -10,6 +10,7 @@ export interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegisterReturn;
   errors?: FieldError;
   displayValue?: ReactNode;
+  containerClassName?: string;
 }
 
 export const InputGroup = ({
@@ -18,10 +19,11 @@ export const InputGroup = ({
   register,
   errors,
   displayValue,
+  containerClassName = "ui-col-span-2",
   ...rest
 }: InputGroupProps) => {
   return (
-    <div className="ui-w-full">
+    <div className={classNames(containerClassName)}>
       <label className="ui-form-control ui-w-full">
         <div className="ui-label">
           <span

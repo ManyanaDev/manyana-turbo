@@ -3,5 +3,5 @@ export const fakePromise = (data: any) =>
     setTimeout(() => {
       resolve(data);
       // reject(data);
-    }, 1000);
+    }, 100);
   });

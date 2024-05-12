@@ -5,10 +5,13 @@ import { projectList } from "@repo/shared/src";
 
 import { SponsorAllocation } from "../../../../components/forms/sponsor/SponsorAllocation";
 import Link from "next/link";
+import { auth } from "../../../../auth.config";
 
 const page: NextPage<{
   searchParams: Record<string, string>;
-}> = ({ searchParams }) => {
+}> = async ({ searchParams }) => {
+  const _auth = await auth();
+  console.log("_auth :>> ", _auth);
   const projects = searchParams?.projects?.split(",");
 
   return (

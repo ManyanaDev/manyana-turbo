@@ -2,18 +2,23 @@
 
 import { Button, InputGroup } from "@repo/ui/InputGroup";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { login } from "../../../actions/auth/login.action";
 import classNames from "classnames";
 import Link from "next/link";
-import type { User } from "@repo/shared/types";
+import type { ILoginForm } from "@repo/shared/types";
+// @ts-ignore
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
+  const { push } = useRouter();
 
-  const form = useForm<User>({
+  const form = useForm<ILoginForm>({
     defaultValues: {
-      email: "test-user@test.com",
+      email: "jack@manyana.io",
+      // email: "test-user@test.com",
       password: "Password1!",
     },
   });
@@ -22,20 +27,31 @@ const LoginForm = () => {
     formState: { errors },
   } = form;
 
-  async function onSubmit(data: User) {
+  async function onSubmit(data: ILoginForm) {
     setLoading(true);
-    try {
-      await login(data);
-    } catch (error) {
-      console.log("error :>> ", error);
-    } finally {
-      setLoading(false);
-    }
+
+    await signIn("signin", {
+      username: data.email,
+      password: data.password,
+      redirect: false,
+    })
+      .then((res) => {
+        if (res?.error) {
+          return toast.error("Invalid credentials");
+        }
+        push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
     <form
-      onSubmit={form.handleSubmit(onSubmit)}
+      onSubmit={form.handleSubmit((data) => onSubmit(data))}
       className={classNames("flex flex-col w-full space-y-2 text-sm", {
         "opacity-70 pointer-events-none": loading,
       })}

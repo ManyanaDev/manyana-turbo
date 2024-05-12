@@ -1,23 +1,26 @@
 "use client";
 
-import { Button, InputGroup, toastPromise } from "@repo/ui/*";
+import { Button, InputGroup } from "@repo/ui/*";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { register } from "../../../actions/auth/register.action";
 import classNames from "classnames";
 import Link from "next/link";
-import { Merchant, User } from "@repo/shared/types";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { IRegisterForm } from "@repo/shared/types";
+// import { signIn } from "next-auth/react";
 
 const RegisterForm = () => {
   const { push } = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<User & Merchant>({
+  const now = Date.now();
+  const form = useForm<IRegisterForm>({
     defaultValues: {
-      name: "Test",
-      email: `user-${Date.now()}@test.com`,
-      business_name: "ACME Inc.",
+      first_name: "Test",
+      last_name: `McTestFace_${now}`,
+      email: `user-${now}@test.com`,
+      business_name: `ACME Inc. ${now}`,
       password: "Password1!",
       password_confirm: "Password1!",
     },
@@ -27,50 +30,72 @@ const RegisterForm = () => {
     formState: { errors },
   } = form;
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function handleSubmit(data: IRegisterForm) {
+    const signIn = (await import("next-auth/react")).signIn;
     setLoading(true);
 
-    toastPromise({
-      func: form.handleSubmit((data) =>
-        register(data).finally(() => {
-          setLoading(false);
-        })
-      ),
-      pending: {
-        title: "Registering",
-        message: "Please wait",
-      },
-      success: {
-        title: "Registration successful",
-        message: "Please check your email for a confirmation link",
-        callback: async function () {
-          push("/register/sponsor-selection");
-        },
-      },
-      error: {
-        title: "Registration failed",
-        message: "Registration failed",
-      },
-    });
+    const res = await signIn("signup", {
+      // USER ----------------------------------------
+      first_name: data.first_name,
+      last_name: data.last_name,
+      email: data.email,
+      password: data.password,
+      // MERCHANT ------------------------------------
+      business_name: data.business_name,
+      // ---------------------------------------------
+      callbackUrl: "/register/sponsor-selection",
+      redirect: false,
+    })
+      .catch((error) => {
+        console.log("error :>> ", error);
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("An error occurred");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    if (res?.error) {
+      return toast.error(res?.error);
+    }
+
+    if (res?.ok && res?.url) {
+      toast.success("Registration successful");
+      return push(res?.url);
+    }
   }
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className={classNames("flex flex-col w-full space-y-2 text-sm", {
+      onSubmit={form.handleSubmit(handleSubmit)}
+      className={classNames("grid grid-cols-2 w-full gap-2 text-sm", {
         "opacity-70 pointer-events-none": loading,
       })}
     >
       <InputGroup
-        label="Name"
-        register={form.register("name", {
+        label="First name"
+        register={form.register("first_name", {
           required: {
             message: "",
             value: true,
           },
         })}
-        errors={errors.name}
+        errors={errors.first_name}
+        containerClassName="col-span-1"
+      />
+      <InputGroup
+        label="Last Name"
+        register={form.register("last_name", {
+          required: {
+            message: "",
+            value: true,
+          },
+        })}
+        errors={errors.last_name}
+        containerClassName="col-span-1"
       />
 
       <InputGroup
@@ -116,7 +141,7 @@ const RegisterForm = () => {
         })}
         errors={errors.password}
       />
-      <div className="pt-10 flex w-full">
+      <div className="pt-10 col-span-2">
         <Button
           type="success"
           size="md"
@@ -127,7 +152,7 @@ const RegisterForm = () => {
           Register
         </Button>
       </div>
-      <div className="w-full pt-4 text-right text-xs">
+      <div className="col-span-2 pt-4 text-right text-xs">
         Already have an account?{" "}
         <Link href={"/login"} className="text-success hover:text-success/50">
           Log in
