@@ -3,7 +3,7 @@ import { Merchant } from "./payload-types";
 /**
  * manually defined User interface, try to use payload interface instead
  */
-export type IMerchant = Pick<Merchant, "business_name" | "primary_user">;
+export type IMerchant = Pick<Merchant, "business_name">;
 
 export type UN_SDG =
   // list of UN sustainability goals

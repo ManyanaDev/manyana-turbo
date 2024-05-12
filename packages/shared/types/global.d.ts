@@ -1,5 +1,5 @@
 export interface ApiResponse {
-  error: null | string;
+  error: any;
   data: unknown | ValidationError;
   status: number;
 }

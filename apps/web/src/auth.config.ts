@@ -7,7 +7,6 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      console.log("auth :>> ", auth);
       // Check if the user is authenticated
       const isLoggedIn = !!auth?.user;
       // Initialize protected routes

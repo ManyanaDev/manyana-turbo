@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import { Users } from './collections/Users'
 import { Merchants } from './collections/Merchants'
+import { Projects } from './collections/Projects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -14,7 +15,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Merchants],
+  collections: [Users, Merchants, Projects],
   editor: lexicalEditor({}),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

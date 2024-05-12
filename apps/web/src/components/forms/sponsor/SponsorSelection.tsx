@@ -2,16 +2,14 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  handleNavigation,
-  isValidProject,
-  projectList,
-} from "@repo/shared/src";
-import { Merchant } from "@repo/shared/types";
+import { isValidProject } from "@repo/shared/src";
+import { Project } from "@repo/shared/types";
 import { SmallOptionCard, Button } from "@repo/ui/*";
+import { toast } from "react-toastify";
+import { updateMerchant } from "../../../actions/merchant/update.action";
 
-const SponsorSelection = () => {
-  const [selected, setSelected] = useState<Merchant["projects"]>([]);
+const SponsorSelection = ({ projects }: { projects: Project[] }) => {
+  const [selected, setSelected] = useState<Project["project_key"][]>([]);
   const { push } = useRouter();
 
   function handleChange(value: string) {
@@ -24,29 +22,40 @@ const SponsorSelection = () => {
     }
   }
 
-  function onNext() {
-    const params = handleNavigation([
-      {
-        key: "projects",
-        value: selected.join(","),
-      },
-    ]);
+  async function onNext() {
+    const _projects = projects.filter((p) => {
+      return selected.includes(p.project_key);
+    });
 
-    push(`/register/sponsor-allocation?${params}`);
+    try {
+      const updated = await updateMerchant({
+        projects: _projects.map((p) => p.id),
+      });
+
+      if (updated.error || updated.status !== 200) {
+        toast.error("Error updating merchant");
+        return;
+      }
+
+      push(`/register/sponsor-allocation`);
+    } catch (error) {
+      console.log("error :>> ", error);
+      toast.error("Error updating merchant");
+    }
   }
 
   return (
     <div>
       <form className="grid grid-cols-4 gap-5">
-        {projectList.map((project) => {
+        {projects?.map((project) => {
           return (
             <SmallOptionCard
               key={project.id}
-              label={project.title}
-              value={project.id}
+              label={project.project_name}
+              value={project.project_key}
               name="projects"
               onClick={handleChange}
-              selected={selected.includes(project.id)}
+              selected={selected.includes(project.project_key)}
             />
           );
         })}

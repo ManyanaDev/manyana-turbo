@@ -1,6 +1,6 @@
-import { ProjectList } from "../../types/Project";
+import { Project, ProjectList } from "../../types";
 
-export function isValidProject(value: unknown): value is ProjectList["id"] {
+export function isValidProject(value: unknown) {
   return projectList.some((project) => project.id === value);
 }
 

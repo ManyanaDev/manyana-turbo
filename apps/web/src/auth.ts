@@ -36,13 +36,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return null;
           }
 
-          const _user: User & IUser = {
+          const _user: User & {
+            first_name: string;
+            last_name: string;
+            payload_token: string;
+          } = {
             id: result.data.user.id,
             email: result.data.user.email,
             image: "",
             first_name: result.data.user.first_name,
             last_name: result.data.user.last_name,
             name: `${result.data.user.first_name} ${result.data.user.last_name}`,
+            payload_token: result.data.token,
           };
 
           return _user;
@@ -109,24 +114,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const merchant: IMerchant = {
           business_name,
-          primary_user: email,
         };
 
         try {
           const result = await register({ user, merchant });
 
-          console.log("result :>> ", result);
-
           if (result.error) {
-            // return null;
-            throw new Error(result.error);
+            return null;
+            // throw new Error(result.error);
           }
 
-          console.log("result.data :>> ", result.data);
+          const loginResult = await login({
+            user: {
+              email: user.email as string,
+              password: user.password as string,
+            },
+          });
+
+          if (loginResult.error) {
+            return null;
+          }
 
           const _user: User & {
             first_name: string;
             last_name: string;
+            payload_token: string;
+            merchant_id: string;
           } = {
             id: result.data.user.id,
             email: result.data.user.email,
@@ -134,9 +147,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             first_name: result.data.user.first_name,
             last_name: result.data.user.last_name,
             name: `${result.data.user.first_name} ${result.data.user.last_name}`,
+            merchant_id: result.data.merchant.id,
+            payload_token: loginResult.data.token,
           };
-
-          console.log("_user :>> ", _user);
 
           return _user;
         } catch (error) {

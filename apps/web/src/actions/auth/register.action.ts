@@ -26,7 +26,6 @@ export async function register({
       merchant,
     })
     .then((res) => {
-      console.log("register success :>> ", res?.data);
       if (res.data.error) {
         return {
           error: res.data.error,

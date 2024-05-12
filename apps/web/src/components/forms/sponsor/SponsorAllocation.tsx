@@ -1,25 +1,24 @@
 "use client";
 
-import { handleNavigation } from "@repo/shared/src";
-import { ProjectList } from "@repo/shared/types";
+import { Project, ProjectList } from "@repo/shared/types";
 import { Button, InputGroup } from "@repo/ui/*";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { updateMerchant } from "../../../actions/merchant/update.action";
+import { toast } from "react-toastify";
 
 export interface SponsorAllocationProps {
-  projects: ProjectList[];
+  projects: Project[];
 }
 
-export type Allocation = Record<ProjectList["id"], number>;
+export type Allocation = Record<Project["project_key"], number>;
 
 export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
-  const { push } = useRouter();
-
   const avg = Math.floor(100 / projects.length);
   const defaultValues = projects.reduce((acc, curr) => {
-    acc[curr.id] = avg || 0;
+    acc[curr.project_key] = avg || 0;
     return acc;
   }, {} as Allocation);
 
@@ -30,19 +29,28 @@ export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
     0
   );
 
-  function onNext() {
+  async function onNext() {
     if (total > 100) {
       return;
     }
 
-    const params = handleNavigation([
-      {
-        key: "sponsorAllocation",
-        value: JSON.stringify(form.getValues()),
-      },
-    ]);
+    const project_allocations = Object.entries(form.getValues()).map((obj) => ({
+      project: obj[0],
+      allocation: obj[1],
+    }));
 
-    push(`/register/checkout?${params}`);
+    console.log("project_allocations :>> ", project_allocations);
+
+    try {
+      await updateMerchant({
+        project_allocations,
+      });
+
+      // push(`/register/checkout`);
+    } catch (error) {
+      console.log("error :>> ", error);
+      toast.error("Error updating merchant");
+    }
   }
 
   return (
@@ -53,13 +61,13 @@ export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
             return (
               <div>
                 <InputGroup
-                  label={project.title}
+                  label={project.project_name}
                   inputType="range"
-                  register={form.register(project.id)}
+                  register={form.register(project.project_key)}
                   min="0"
                   max="100"
                   step={1}
-                  displayValue={form.watch(project.id) + "%"}
+                  displayValue={form.watch(project.project_key) + "%"}
                 />
               </div>
             );

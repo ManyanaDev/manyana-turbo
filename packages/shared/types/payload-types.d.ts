@@ -10,18 +10,15 @@ export interface Config {
   collections: {
     users: User;
     merchants: Merchant;
+    projects: Project;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   globals: {};
   locale: null;
-  user:
-    | (User & {
-        collection: 'users';
-      })
-    | (Merchant & {
-        collection: 'merchants';
-      });
+  user: User & {
+    collection: 'users';
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -52,19 +49,32 @@ export interface Merchant {
   business_name: string;
   phone_number?: string | null;
   address?: string | null;
-  primary_user: string;
+  primary_user: number | User;
   website?: string | null;
   description?: string | null;
+  projects?: (number | Project)[] | null;
+  project_allocations?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: number;
+  project_name: string;
+  project_key: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -72,15 +82,10 @@ export interface Merchant {
  */
 export interface PayloadPreference {
   id: number;
-  user:
-    | {
-        relationTo: 'users';
-        value: number | User;
-      }
-    | {
-        relationTo: 'merchants';
-        value: number | Merchant;
-      };
+  user: {
+    relationTo: 'users';
+    value: number | User;
+  };
   key?: string | null;
   value?:
     | {
