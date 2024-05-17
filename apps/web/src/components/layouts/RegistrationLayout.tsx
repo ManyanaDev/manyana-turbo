@@ -1,12 +1,10 @@
 import React, { ReactNode } from "react";
 
-const RegistrationLayout = ({
-  children,
-  right,
-}: {
+interface RegistrationLayoutProps {
   children?: ReactNode;
   right?: ReactNode;
-}) => {
+}
+const RegistrationLayout = ({ children, right }: RegistrationLayoutProps) => {
   return (
     <div className="min-h-screen flex bg-base-100">
       <div className="w-1/2 p-20">{children}</div>

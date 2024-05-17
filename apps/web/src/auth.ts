@@ -32,6 +32,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           });
 
+          console.log("result :>> ", result);
+
           if (result.error) {
             return null;
           }
@@ -165,7 +167,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     //   return true;
     // },
     async session({ session, token, user }) {
-      console.log("user :>> ", user);
       // @ts-ignore
       session.user = token.user as User;
       return session;

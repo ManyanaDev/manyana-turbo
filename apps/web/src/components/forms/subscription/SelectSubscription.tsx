@@ -20,13 +20,17 @@ const SelectSubscription = ({
 }) => {
   const router = useRouter();
   const [recurrence, setRecurrence] = useState<Recurrence>("year");
-  const [plan, setPlan] = useState<string>("investor_annually");
+  const [plan, setPlan] = useState<string | undefined>("investor_annually");
 
   const selected = options[recurrence].find((o) => o.value === plan);
 
   useEffect(() => {
-    if (options[recurrence][1]) {
-      setPlan(options[recurrence][1].value);
+    const optionsForRecurrence = options?.[recurrence];
+    if (!optionsForRecurrence) {
+      setRecurrence("year");
+    }
+    if (optionsForRecurrence && optionsForRecurrence[1]?.value) {
+      setPlan(optionsForRecurrence[1].value as string);
     }
   }, [recurrence]);
 
@@ -139,11 +143,13 @@ const SelectSubscription = ({
           </div>
         </div>
         <div>
-          <RadioCards
-            options={options[recurrence]}
-            selected={plan}
-            setSelected={setPlan}
-          />
+          {plan && (
+            <RadioCards
+              options={options[recurrence]}
+              selected={plan}
+              setSelected={setPlan}
+            />
+          )}
         </div>
       </div>
     </RegistrationLayout>

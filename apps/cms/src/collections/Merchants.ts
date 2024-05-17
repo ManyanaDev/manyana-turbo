@@ -1,4 +1,4 @@
-import { AccessArgs, CollectionConfig } from 'payload/types'
+import { AccessArgs, CollectionConfig, PayloadRequest } from 'payload/types'
 
 async function allowOwnerOrAdmin({ req: { user, payload }, id, data }: AccessArgs<any, any>) {
   if (!id) {
@@ -8,6 +8,7 @@ async function allowOwnerOrAdmin({ req: { user, payload }, id, data }: AccessArg
     // use id to get the existing document
     const merchant = await payload?.findByID({ collection: 'merchants', id: id as number })
 
+    console.log('merchant collection :>>', user, merchant.primary_user)
     // @ts-ignore
     if (merchant.primary_user?.id == user.id || ['admin', 'super_admin'].includes(user?.role)) {
       return true
@@ -26,10 +27,10 @@ export const Merchants: CollectionConfig = {
   },
   // auth: true,
   access: {
-    create: allowOwnerOrAdmin,
-    read: allowOwnerOrAdmin,
-    update: allowOwnerOrAdmin,
-    delete: allowOwnerOrAdmin,
+    create: () => true, //allowOwnerOrAdmin,
+    read: () => true, //allowOwnerOrAdmin,
+    update: () => true, //allowOwnerOrAdmin,
+    delete: () => true, //allowOwnerOrAdmin,
   },
   fields: [
     {
@@ -73,6 +74,7 @@ export const Merchants: CollectionConfig = {
     },
     {
       name: 'project_allocations',
+      label: 'Project Allocations',
       type: 'json',
       jsonSchema: {
         type: 'array',
@@ -84,10 +86,44 @@ export const Merchants: CollectionConfig = {
               relationTo: 'projects',
             },
             allocation: {
-              type: 'number',
+              type: 'integer',
             },
           },
         },
+      },
+    },
+  ],
+  endpoints: [
+    {
+      path: '/primary_user/:user_id',
+      method: 'get',
+      async handler(req) {
+        if (!req.routeParams?.user_id) {
+          return Response.json({ message: 'user_id is required' }, { status: 400 })
+        }
+
+        try {
+          const crops = await req.payload.find({
+            collection: 'merchants',
+            where: {
+              primary_user: {
+                equals: Number(req.routeParams?.user_id),
+              },
+            },
+            limit: 1,
+          })
+
+          if (crops.docs.length === 0) {
+            return Response.json({ message: 'No merchant found' }, { status: 404 })
+          }
+
+          const crop = crops.docs[0]
+
+          return Response.json(crop)
+        } catch (error) {
+          console.log('error :>> ', error)
+          return Response.json({ error }, { status: 500 })
+        }
       },
     },
   ],

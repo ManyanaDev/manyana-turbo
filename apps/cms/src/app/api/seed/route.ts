@@ -54,6 +54,39 @@ export const GET = async () => {
           data: {
             project_name: project.title,
             project_key: project.id,
+            slug: project.slug,
+          },
+        })
+      }),
+    )
+
+    const new_users = await Promise.all(
+      Array.from({ length: 5 }, async (_, i) => {
+        return await payload.create({
+          collection: 'users',
+          data: {
+            first_name: 'Regular',
+            last_name: 'User',
+            email: `jack@manyana-${i}.io`,
+            password: 'Password1!',
+            role: 'user',
+          },
+        })
+      }),
+    )
+
+    console.log('new_users :>> ', new_users)
+
+    // CREATE MERCHANT FOR EACH USER
+
+    await Promise.all(
+      new_users.map(async (user) => {
+        return await payload.create({
+          collection: 'merchants',
+          data: {
+            business_name: 'Test Merchant',
+            primary_user: user.id,
+            projects: _projects.slice(1, Math.floor(Math.random() * 10)).map((p) => p.id),
           },
         })
       }),
@@ -65,7 +98,7 @@ export const GET = async () => {
       data: {
         business_name: 'Test Merchant (with projects)',
         primary_user: user1.id,
-        projects: _projects.slice(0, 4).map((p) => p.id),
+        projects: _projects.slice(1, Math.floor(Math.random() * 10)).map((p) => p.id),
       },
     })
 

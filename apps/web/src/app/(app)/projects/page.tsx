@@ -1,19 +1,16 @@
 import React from "react";
 import { NextPage } from "next";
 import { getMerchantProjects } from "../../../actions/merchant/merchant-projects";
-import Link from "next/link";
+import { Project } from "@repo/shared/types";
+import ProjectCard from "../../../components/elements/ProjectCard";
 
 const Page: NextPage<{
   searchParams: Record<string, string>;
 }> = async () => {
   const merchantProjects = await getMerchantProjects();
 
-  const list = merchantProjects?.data?.map((project) => (
-    <div key={project.id}>
-      <Link href={`/projects/${project.id}`}>
-        <div>{project.project_name}</div>
-      </Link>
-    </div>
+  const list = merchantProjects?.data?.map((project: Project) => (
+    <ProjectCard {...project} />
   ));
 
   return (
@@ -22,7 +19,7 @@ const Page: NextPage<{
       {merchantProjects?.data?.length === 0 ? (
         <div>No projects found</div>
       ) : (
-        <div>{list}</div>
+        <div className="grid grid-cols-3 gap-5">{list}</div>
       )}
     </div>
   );

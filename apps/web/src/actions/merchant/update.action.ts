@@ -32,6 +32,7 @@ export async function updateMerchant(
       },
     })
     .then((res) => {
+      console.log("res :>> ", res);
       return { data: res.data, error: null, status: res.status };
     })
     .catch((err) => {

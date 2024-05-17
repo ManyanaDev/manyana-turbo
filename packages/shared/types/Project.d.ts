@@ -5,6 +5,7 @@ export interface ProjectList {
   id: Projects | UN_SDG;
   title: string;
   description: string;
+  slug: string;
 }
 
 export interface IPriceOption {

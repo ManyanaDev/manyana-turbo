@@ -39,7 +39,7 @@ const LoginForm = () => {
         if (res?.error) {
           return toast.error("Invalid credentials");
         }
-        push("/");
+        push("/projects");
       })
       .catch((error) => {
         console.log(error);

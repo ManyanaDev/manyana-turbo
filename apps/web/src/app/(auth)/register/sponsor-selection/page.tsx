@@ -9,6 +9,16 @@ const page = async () => {
   if (!projects?.data) {
     return (
       <div className="max-w-screen-xl mx-auto space-y-5">
+        <form
+          action={async () => {
+            "use server";
+            await signOut({
+              redirectTo: "/login",
+            });
+          }}
+        >
+          <button>Log Out</button>
+        </form>
         Error loading projects
       </div>
     );

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { signOut } from "../../auth.config";
+import { signOut } from "../../auth";
 
 const SignOut = () => {
   return (

@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPage } from "next";
-import { projectList } from "@repo/shared/src";
 
 import { SponsorAllocation } from "../../../../components/forms/sponsor/SponsorAllocation";
 import Link from "next/link";
@@ -8,8 +7,6 @@ import { getMerchantProjects } from "../../../../actions/merchant/merchant-proje
 
 const page: NextPage = async () => {
   const projects = await getMerchantProjects();
-
-  console.log("projects :>> ", projects);
 
   return (
     <div className="max-w-screen-xl mx-auto space-y-5">

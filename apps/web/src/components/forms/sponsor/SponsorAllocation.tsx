@@ -1,9 +1,8 @@
 "use client";
 
-import { Project, ProjectList } from "@repo/shared/types";
+import { Merchant, Project } from "@repo/shared/types";
 import { Button, InputGroup } from "@repo/ui/*";
 import classNames from "classnames";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { updateMerchant } from "../../../actions/merchant/update.action";
@@ -34,17 +33,34 @@ export const SponsorAllocation = ({ projects }: SponsorAllocationProps) => {
       return;
     }
 
-    const project_allocations = Object.entries(form.getValues()).map((obj) => ({
-      project: obj[0],
-      allocation: obj[1],
-    }));
+    const values = form.getValues();
+
+    const project_allocations: Merchant["project_allocations"] = projects.map(
+      (p) => {
+        return {
+          project: p.id,
+          allocation: Number(values[p.project_key]),
+        };
+      }
+    );
+    // const project_allocations = Object.entries(form.getValues()).map((obj) => ({
+    //   project: obj[0],
+    //   allocation: obj[1],
+    // }));
 
     console.log("project_allocations :>> ", project_allocations);
 
     try {
-      await updateMerchant({
+      const updated = await updateMerchant({
         project_allocations,
       });
+
+      console.log("updated :>> ", updated);
+
+      if (updated.error) {
+        toast.error(updated.error.message);
+        return;
+      }
 
       // push(`/register/checkout`);
     } catch (error) {

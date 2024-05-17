@@ -5,11 +5,11 @@ import { auth } from "../../auth";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@repo/shared/types";
 
-export async function getProject(id?: string): Promise<ApiResponse> {
+export async function getProject(slug?: string): Promise<ApiResponse> {
   const session = await auth();
 
   return await axios
-    .get(`${PAYLOAD_API_URL}/projects/${id}`, {
+    .get(`${PAYLOAD_API_URL}/projects/slug/${slug}`, {
       headers: {
         // @ts-ignore
         Authorization: `Bearer ${session?.user?.payload_token}`,

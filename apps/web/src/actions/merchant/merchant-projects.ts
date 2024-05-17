@@ -8,15 +8,18 @@ import { auth } from "../../auth";
 export async function getMerchantProjects(): Promise<ApiResponse> {
   const session = await auth();
 
+  console.log(session?.user);
+
   return await axios
     // @ts-ignore
-    .get(`${PAYLOAD_API_URL}/merchants/${session?.user?.merchant_id}`, {
+    .get(`${PAYLOAD_API_URL}/merchants/primary_user/${session?.user?.id}`, {
       headers: {
         // @ts-ignore
         Authorization: `Bearer ${session?.user?.payload_token}`,
       },
     })
     .then((res) => {
+      console.log("res :>> ", res.data);
       return {
         data: res.data.projects ?? [],
         error: null,
@@ -24,7 +27,6 @@ export async function getMerchantProjects(): Promise<ApiResponse> {
       };
     })
     .catch((err) => {
-      console.log(err);
       if (err instanceof AxiosError) {
         return {
           data: [],

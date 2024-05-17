@@ -29,7 +29,7 @@ export const POST = async (request: Request) => {
     )
   }
 
-  const { business_name, primary_user } = merchant as Types.IMerchant
+  const { business_name } = merchant as Types.IMerchant
 
   try {
     const user = await payload.create({

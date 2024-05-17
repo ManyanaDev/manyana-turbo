@@ -2,19 +2,18 @@
 
 import { PAYLOAD_API_URL } from "@repo/shared/src";
 import axios from "axios";
-import { auth } from "../../auth";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@repo/shared/types";
 
 export async function getProjects(): Promise<ApiResponse> {
-  const session = await auth();
-  console.log("session?.user :>> ", session?.user);
+  // const session = await auth();
+  // console.log("session?.user :>> ", session?.user);
 
   return await axios
     .get(`${PAYLOAD_API_URL}/projects`, {
       headers: {
         // @ts-ignore
-        Authorization: `Bearer ${session?.user?.payload_token}`,
+        // Authorization: `Bearer ${session?.user?.payload_token}`,
       },
     })
     .then((res) => {

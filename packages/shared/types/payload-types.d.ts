@@ -73,6 +73,7 @@ export interface Project {
   id: number;
   project_name: string;
   project_key: string;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
