@@ -1,6 +1,6 @@
 import { AccessArgs, CollectionConfig, PayloadRequest } from 'payload/types'
 
-async function allowOwnerOrAdmin({ req: { user, payload }, id, data }: AccessArgs<any, any>) {
+async function allowOwnerOrAdmin({ req: { user, payload }, id, data }: any) {
   if (!id) {
     return false
   }
