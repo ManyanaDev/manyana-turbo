@@ -2,6 +2,7 @@
 
 # Dependencies
 node_modules
+**/node_modules
 .pnp
 .pnp.js
 
@@ -23,6 +24,7 @@ coverage
 
 # Build Outputs
 .next/
+**/.next/
 out/
 build
 dist
