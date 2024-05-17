@@ -1,6 +1,6 @@
 {
   "name": "@repo/cms",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "Payload Admin for Manyana",
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
