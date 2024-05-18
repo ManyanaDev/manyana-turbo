@@ -3130,7 +3130,6 @@ __metadata:
     "@types/react-dom": "npm:^18.2.21"
     cross-env: "npm:^7.0.3"
     dotenv: "npm:^16.4.5"
-    exceptionally: "npm:^3.0.1"
     next: "npm:^14.3.0-canary.7"
     payload: "npm:beta"
     react: "npm:^18.2.0"
@@ -3274,7 +3273,6 @@ __metadata:
     axios: "npm:^1.6.8"
     daisyui: "npm:^4.10.3"
     eslint: "npm:^8.57.0"
-    exceptionally: "npm:^3.0.1"
     next: "npm:^14.1.1"
     next-auth: "npm:^5.0.0-beta.17"
     postcss: "npm:^8.4.38"
@@ -7973,15 +7971,6 @@ __metadata:
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: 10c0/d6b6f2adbccbcda74ddbab52ed07db727ef52e31a61ed26db9feb7dc62af7fc8e060defa65e5f8af9449b86b52cc1a1f6a79f2eafcf4e62add2b7a1fa4a432f6
-  languageName: node
-  linkType: hard
-
-"exceptionally@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "exceptionally@npm:3.0.1"
-  peerDependencies:
-    typescript: ^5.0
-  checksum: 10c0/784b2e628f3322abd2d1df98f7ee2c1b9648e315c49680f3e6be618539ab0164eaac07dcee71a27a83f9b65a63b11a0bc0bcba300b477b6dbb48ca29a3d58228
   languageName: node
   linkType: hard
 

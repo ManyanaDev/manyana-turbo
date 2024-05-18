@@ -24,7 +24,6 @@
     "@payloadcms/richtext-lexical": "beta",
     "@repo/shared": "*",
     "cross-env": "^7.0.3",
-    "exceptionally": "^3.0.1",
     "next": "^14.3.0-canary.7",
     "payload": "beta",
     "react": "^18.2.0",
