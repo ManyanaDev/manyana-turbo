@@ -42,9 +42,12 @@ export async function register({
     })
     .catch((error) => {
       if (error instanceof AxiosError) {
-        console.log("register error :>> ", error.response?.data);
         return {
-          error: error.response?.data?.error || "Registration failed",
+          error:
+            error.response?.data?.error ||
+            //  @ts-ignore
+            error?.errors! ||
+            "Registration failed",
           data: error.response?.data,
           status: error.response?.status || 500,
         };

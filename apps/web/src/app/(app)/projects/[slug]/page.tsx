@@ -25,15 +25,15 @@ const Page: NextPage<{
   );
 };
 
-export async function generateStaticParams() {
-  const projects = await getProjects();
+// export async function generateStaticParams() {
+//   const projects = await getProjects();
 
-  return (
-    projects?.data?.map((project: Project) => ({
-      slug: slugify(project.slug),
-    })) ?? []
-  );
-}
+//   return (
+//     projects?.data?.map((project: Project) => ({
+//       slug: slugify(project.slug),
+//     })) ?? []
+//   );
+// }
 
 export default Page;
 

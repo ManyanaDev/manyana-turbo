@@ -23,6 +23,8 @@ export async function updateMerchant(
     };
   }
 
+  console.log(urls_config.PAYLOAD_API_URL);
+
   return await axios
     .patch(
       // @ts-ignore

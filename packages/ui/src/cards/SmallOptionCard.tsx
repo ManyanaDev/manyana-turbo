@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import classNames from "classnames";
-import React from "react";
 
 interface SmallOptionCardProps {
   label: string;
