@@ -3250,6 +3250,7 @@ __metadata:
     typescript: "npm:^5.3.3"
   peerDependencies:
     react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
