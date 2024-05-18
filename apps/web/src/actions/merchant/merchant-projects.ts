@@ -1,5 +1,5 @@
 "use server";
-import { PAYLOAD_API_URL } from "@repo/shared/src";
+import { urls_config } from "@repo/shared/src";
 import axios from "axios";
 import { AxiosError } from "axios";
 import { ApiResponse } from "@repo/shared/types";
@@ -12,12 +12,15 @@ export async function getMerchantProjects(): Promise<ApiResponse> {
 
   return await axios
     // @ts-ignore
-    .get(`${PAYLOAD_API_URL}/merchants/primary_user/${session?.user?.id}`, {
-      headers: {
-        // @ts-ignore
-        Authorization: `Bearer ${session?.user?.payload_token}`,
-      },
-    })
+    .get(
+      `${urls_config.PAYLOAD_API_URL}/merchants/primary_user/${session?.user?.id}`,
+      {
+        headers: {
+          // @ts-ignore
+          Authorization: `Bearer ${session?.user?.payload_token}`,
+        },
+      }
+    )
     .then((res) => {
       console.log("res :>> ", res.data);
       return {

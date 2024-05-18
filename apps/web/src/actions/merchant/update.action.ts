@@ -1,6 +1,6 @@
 "use server";
 
-import { PAYLOAD_API_URL } from "@repo/shared/src";
+import { urls_config } from "@repo/shared/src";
 import { ApiResponse, Merchant } from "@repo/shared/types";
 import axios from "axios";
 import { AxiosError } from "axios";
@@ -24,13 +24,17 @@ export async function updateMerchant(
   }
 
   return await axios
-    // @ts-ignore
-    .patch(`${PAYLOAD_API_URL}/merchants/${session?.user?.merchant_id}`, body, {
-      headers: {
-        // @ts-ignore
-        Authorization: `Bearer ${session?.user?.payload_token}`,
-      },
-    })
+    .patch(
+      // @ts-ignore
+      `${urls_config.PAYLOAD_API_URL}/merchants/${session?.user?.merchant_id}`,
+      body,
+      {
+        headers: {
+          // @ts-ignore
+          Authorization: `Bearer ${session?.user?.payload_token}`,
+        },
+      }
+    )
     .then((res) => {
       console.log("res :>> ", res);
       return { data: res.data, error: null, status: res.status };

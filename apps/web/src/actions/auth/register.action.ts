@@ -1,6 +1,6 @@
 "use server";
 
-import { PAYLOAD_API_URL } from "@repo/shared/src";
+import { urls_config } from "@repo/shared/src";
 import { ApiResponse, IMerchant, IUser } from "@repo/shared/types";
 import axios from "axios";
 import { AxiosError } from "axios";
@@ -21,7 +21,7 @@ export async function register({
   merchant: IMerchant;
 }): Promise<ApiResponse> {
   return await axios
-    .post(`${PAYLOAD_API_URL}/auth/register`, {
+    .post(`${urls_config.PAYLOAD_API_URL}/auth/register`, {
       user,
       merchant,
     })

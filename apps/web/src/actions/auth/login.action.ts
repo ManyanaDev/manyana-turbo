@@ -2,7 +2,7 @@
 
 import { ApiResponse, ILoginForm } from "@repo/shared/types";
 import axios from "axios";
-import { PAYLOAD_API_URL } from "@repo/shared/src";
+import { urls_config } from "@repo/shared/src";
 import { AxiosError } from "axios";
 
 export async function login({
@@ -11,7 +11,7 @@ export async function login({
   user: ILoginForm;
 }): Promise<ApiResponse> {
   return await axios
-    .post(`${PAYLOAD_API_URL}/users/login`, {
+    .post(`${urls_config.PAYLOAD_API_URL}/users/login`, {
       email: user.email,
       password: user.password,
     })

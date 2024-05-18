@@ -1,5 +1,5 @@
 "use server";
-import { PAYLOAD_API_URL } from "@repo/shared/src";
+import { urls_config } from "@repo/shared/src";
 import axios from "axios";
 import { auth } from "../../auth";
 import { AxiosError } from "axios";
@@ -9,7 +9,7 @@ export async function getProject(slug?: string): Promise<ApiResponse> {
   const session = await auth();
 
   return await axios
-    .get(`${PAYLOAD_API_URL}/projects/slug/${slug}`, {
+    .get(`${urls_config.PAYLOAD_API_URL}/projects/slug/${slug}`, {
       headers: {
         // @ts-ignore
         Authorization: `Bearer ${session?.user?.payload_token}`,
