@@ -88,7 +88,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials, _req) {
         if (!Object.values(credentials).every(isValueValidString)) {
-          throw new Error("Invalid input");
+          // throw new Error("Invalid input");
+          return null;
         }
 
         const business_name = isValueValidString(credentials.business_name)
@@ -156,7 +157,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return _user;
         } catch (error) {
           console.log("error :>> ", error);
-          throw new Error(JSON.stringify(error));
+          // throw new Error(JSON.stringify(error));
+          return null;
         }
       },
     }),
