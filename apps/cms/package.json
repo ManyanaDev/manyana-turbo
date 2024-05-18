@@ -14,7 +14,7 @@
     "generate:types": "payload generate:types"
   },
   "engines": {
-    "node": ">=18.19.0"
+    "node": ">=20.12.2"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "beta",
